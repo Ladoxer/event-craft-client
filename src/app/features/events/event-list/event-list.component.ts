@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Event } from '../../../core/models/event.model';
 import { EventService } from '../../../core/services/event.service';
 
@@ -7,7 +7,7 @@ import { EventService } from '../../../core/services/event.service';
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css'
 })
-export class EventListComponent {
+export class EventListComponent implements OnInit {
   events: Event[] = [];
 
   constructor(private eventService: EventService) { }
@@ -25,5 +25,9 @@ export class EventListComponent {
         console.error(error);
       }
     })
+  }
+
+  deleteEvent(id: string): void {
+    this.events = this.events.filter((event) => event.id !== id);
   }
 }

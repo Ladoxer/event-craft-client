@@ -3,20 +3,32 @@
   <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
+      <input matInput type="text" formControlName="name">
+      <mat-error *ngIf="signupForm.get('username')?.hasError('required')">
+        Username is required
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email">
+      <input matInput type="email" formControlName="email">
+      <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="signupForm.get('email')?.hasError('email')">
+        Invalid email
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
       <input matInput  formControlName="password" type="password">
+      <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+        Password is required
+      </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Sign Up</button>
+    <button mat-raised-button color="primary" type="submit" [ngClass]="!signupForm.valid? 'disable cursor-none' : ''">Sign Up</button>
   </form>
   <p>Already have an account? <a routerLink="/login">Login</a></p>
 </div>

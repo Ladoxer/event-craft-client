@@ -18,17 +18,28 @@ export class SignupComponent {
   ) {
     this.signupForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   onSubmit(): void {
+    console.log(this.signupForm.value);
     if (this.signupForm.valid) {
       this.authService
-        .signup(this.signupForm.value)
-        .subscribe(() => {
-          this.router.navigate(['/']);
+        .signup(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password)
+        .subscribe({
+          next: (res) => {
+            localStorage.setItem('token', res.token);
+            localStorage.setItem('userData', res.id);
+            this.authService.loginStatus$.next(true);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => {
+            this.router.navigate(['/']);
+          }
         });
     }
   }

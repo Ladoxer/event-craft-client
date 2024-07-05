@@ -25,8 +25,9 @@ export class AddEventComponent {
 
   onSubmit(): void {
     if (this.eventForm.valid) {
+      const userId = localStorage.getItem('userData');
       this.eventService
-        .createEvent(this.eventForm.value)
+        .createEvent({...this.eventForm.value, organizer: userId as string})
         .subscribe(() => {
           this.router.navigate(['/']);
         });

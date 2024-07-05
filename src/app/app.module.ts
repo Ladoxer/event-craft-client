@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventListComponent } from './features/events/event-list/event-list.component';
 import { EventItemComponent } from './features/events/event-item/event-item.component';
 import { AddEventComponent } from './features/events/add-event/add-event.component';
@@ -20,6 +21,7 @@ import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { SignupComponent } from './features/auth/signup/signup.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -36,16 +38,20 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     RouterModule,
+    FormsModule,
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor]))
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

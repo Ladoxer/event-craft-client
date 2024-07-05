@@ -4,11 +4,31 @@
   </mat-card-header>
   <mat-card-content>
     <p>{{ event.description }}</p>
-    <p>{{ event.date | date }}</p>
+    <div class="d-flex justify-content-between">
+      <span>{{ event.date | date }}</span>
+      <span>No. of attendees: [{{event.attendees?.length? event.attendees?.length: '0'}}]</span>
+    </div>
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="rsvpEvent()">RSVP</button>
-    <button mat-raised-button color="accent" routerLink="/edit/{{ event.id }}">Edit</button>
-    <button mat-raised-button color="warn" (click)="deleteEvent()">Delete</button>
+  <mat-card-actions class="gap-1">
+    <ng-template [ngIf]="!isOrganiser">
+      <button *ngIf="!isAttending" mat-raised-button color="primary" (click)="rsvpEvent()">
+        RSVP
+      </button>
+      <button *ngIf="isAttending" mat-raised-button color="secondary">
+        Participating 
+      </button>  
+    </ng-template>
+    <ng-template [ngIf]="isOrganiser">
+      <button
+        mat-raised-button
+        color="accent"
+        routerLink="/edit/{{ event.id }}"
+      >
+        Edit
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteEvent()">
+        Delete
+      </button>
+    </ng-template>
   </mat-card-actions>
 </mat-card>

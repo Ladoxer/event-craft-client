@@ -17,7 +17,7 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -26,8 +26,18 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService
         .login(this.loginForm.value.email, this.loginForm.value.password)
-        .subscribe(() => {
-          this.router.navigate(['/']);
+        .subscribe({
+          next: (res) => {
+            localStorage.setItem('token', res.token);
+            localStorage.setItem('userData', res.id);
+            this.authService.loginStatus$.next(true);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+          complete: () => {
+            this.router.navigate(['/']);
+          }
         });
     }
   }
