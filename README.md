@@ -16,4 +16,3 @@
 ### Additional Features
 - Custom styling using Angular Material and Bootstrap.
 - Reactive forms for input validation.
-- Pagination and search functionality (implement as needed).
