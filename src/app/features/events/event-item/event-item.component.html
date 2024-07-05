@@ -1,0 +1,14 @@
+<mat-card class="event-item">
+  <mat-card-header>
+    <mat-card-title>{{ event.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ event.description }}</p>
+    <p>{{ event.date | date }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="rsvpEvent()">RSVP</button>
+    <button mat-raised-button color="accent" routerLink="/edit/{{ event.id }}">Edit</button>
+    <button mat-raised-button color="warn" (click)="deleteEvent()">Delete</button>
+  </mat-card-actions>
+</mat-card>
