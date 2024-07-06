@@ -1,4 +1,4 @@
 export const environments = {
   production: true,
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://event-craft-server.onrender.com',
 }
