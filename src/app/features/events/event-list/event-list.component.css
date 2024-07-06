@@ -1,0 +1,10 @@
+.input-group .date-input {
+  flex: 1 1 auto;
+  max-width: 150px;
+}
+
+@media (max-width: 768px) {
+  .input-group .date-input {
+    max-width: 100%;
+  }
+}

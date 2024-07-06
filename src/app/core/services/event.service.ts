@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Event } from '../models/event.model';
@@ -12,8 +12,15 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-  getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.apiUrl);
+  getEvents(keyword?: string, date?: string): Observable<Event[]> {
+    let params = new HttpParams();
+    if (keyword) {
+      params = params.set('keyword', keyword);
+    }
+    if (date) {
+      params = params.set('date', date);
+    }
+    return this.http.get<Event[]>(this.apiUrl, { params });
   }
 
   createEvent(event: Event): Observable<Event> {

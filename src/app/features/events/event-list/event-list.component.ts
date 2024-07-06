@@ -10,6 +10,10 @@ import { EventService } from '../../../core/services/event.service';
 export class EventListComponent implements OnInit {
   events: Event[] = [];
 
+  keyword: string = '';
+  date: string = '';
+  loading: boolean = false;
+
   constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
@@ -17,17 +21,24 @@ export class EventListComponent implements OnInit {
   }
 
   loadEvents(): void {
-    this.eventService.getEvents().subscribe({
+    this.loading = true;
+    this.eventService.getEvents(this.keyword, this.date).subscribe({
       next: (events) => {
         this.events = events;
+        this.loading = false;
       },
       error: (error) => {
         console.error(error);
+        this.loading = false;
       }
     })
   }
 
   deleteEvent(id: string): void {
     this.events = this.events.filter((event) => event.id !== id);
+  }
+
+  onSearch(): void {
+    this.loadEvents();
   }
 }

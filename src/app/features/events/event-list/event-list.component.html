@@ -1,5 +1,47 @@
-<div class="row">
-  <div class="col-md-6 col-lg-4" *ngFor="let event of events">
-    <app-event-item [event]="event" (deleteEmitter)="deleteEvent($event)"></app-event-item>
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="search-addon">
+          <i class="bi bi-search"></i>
+        </span>
+      </div>
+      <input
+        type="text"
+        class="form-control me-2"
+        placeholder="Search by keyword"
+        [(ngModel)]="keyword"
+        [ngModelOptions]="{ standalone: true }"
+        (input)="onSearch()"
+        aria-label="Search by keyword"
+        aria-describedby="search-addon"
+      />
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="date-addon">
+          <i class="bi bi-calendar"></i>
+        </span>
+      </div>
+      <input
+        type="date"
+        class="form-control date-input"
+        [(ngModel)]="date"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="onSearch()"
+        aria-label="Search by date"
+        aria-describedby="date-addon"
+      />
+    </div>
   </div>
+</div>
+<div class="row">
+  <div *ngIf="loading" class="col-12 text-center">
+    <div class="spinner-border" role="status">
+      <!-- <span class="sr-only">Loading...</span> -->
+    </div>
+  </div>
+  <ng-template [ngIf]="!loading">
+    <div class="col-md-6 col-lg-4" *ngFor="let event of events">
+      <app-event-item [event]="event" (deleteEmitter)="deleteEvent($event)"></app-event-item>
+    </div>
+  </ng-template>
 </div>
