@@ -4,8 +4,8 @@
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput type="text" formControlName="name">
-      <mat-error *ngIf="signupForm.get('username')?.hasError('required')">
-        Username is required
+      <mat-error *ngIf="signupForm.get('name')?.hasError('required')">
+        Name is required
       </mat-error>
     </mat-form-field>
 
@@ -25,6 +25,9 @@
       <input matInput  formControlName="password" type="password">
       <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
         Password is required
+      </mat-error>
+      <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
+        Password must be at least 6 characters
       </mat-error>
     </mat-form-field>
 
